@@ -1,0 +1,15 @@
+{
+  "name": "notes-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Abhay Goswami",
+  "license": "ISC",
+  "dependencies": {
+    "lodash": "^4.17.11",
+    "yargs": "^12.0.2"
+  }
+}
