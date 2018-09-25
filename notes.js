@@ -1,50 +1,50 @@
 const fs = require('fs');
 
-let fetchNotes = () => {
-    try {
-      let noteString = fs.readFileSync('note-data.json');
-      return JSON.parse(noteString);
-    } catch (e) {
-      return [];
-    }
-}
+var fetchNotes = () => {
+  try {
+    var notesString = fs.readFileSync('notes-data.json');
+    return JSON.parse(notesString);
+  } catch (e) {
+    return [];
+  }
+};
 
-let saveNote = (note) => {
-  fs.writeFileSync('note-data.json',JSON.stringify(note));
-}
+var saveNotes = (notes) => {
+  fs.writeFileSync('notes-data.json', JSON.stringify(notes));
+};
 
-const addNote = (title, body) => {
-  var note = fetchNotes();
-  var notes = {
+var addNote = (title, body) => {
+  var notes = fetchNotes();
+  var note = {
     title,
     body
   };
+  var duplicateNotes = notes.filter((note) => note.title === title);
 
-  let filteredNote = note.filter((note) => note.title === title);
-  if (filteredNote.length === 0) {
-    note.push(notes);
-    saveNote(note);
+  if (duplicateNotes.length === 0) {
+    notes.push(note);
+    saveNotes(notes);
     return note;
   }
-}
+};
 
-const listNotes = () => {
-  let notes = fetchNotes();
-  return notes;
-}
+var getAll = () => {
+  return fetchNotes();
+};
 
-const readNote = (title) => {
-  let notes = fetchNotes();
-  let filteredNote = notes.filter((note) => note.title === title);
-  return filteredNote;
-}
+var getNote = (title) => {
+  var notes = fetchNotes();
+  var filteredNotes = notes.filter((note) => note.title === title);
+  return filteredNotes[0];
+};
 
-const removeNote = (title) => {
-  let notes = fetchNotes();
-  let removeNote = notes.filter((note) => note.title !== title);
-  saveNote(removeNote);
-  return removeNote.length !== notes.length;
-}
+var removeNote = (title) => {
+  var notes = fetchNotes();
+  var filteredNotes = notes.filter((note) => note.title !== title);
+  saveNotes(filteredNotes);
+
+  return notes.length !== filteredNotes.length;
+};
 
 var logNote = (note) => {
   console.log('--');
@@ -54,7 +54,8 @@ var logNote = (note) => {
 
 module.exports = {
   addNote,
-  listNotes,
-  readNote,
-  removeNote
+  getAll,
+  getNote,
+  removeNote,
+  logNote
 };
